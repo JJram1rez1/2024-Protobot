@@ -5,31 +5,26 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
 public class DriveBase extends SubsystemBase {
-
   /* Device Declaration */
 
   // Declare Controller
   CommandXboxController m_driverControl = new CommandXboxController(Constants.OperatorConstants.kDriverControllerPort);
 
   // Declare Motors
-  Talon rightFrontMotor = new Talon(Constants.DeviceIds.kFrontRightId);
-  Talon rightBackMotor = new Talon(Constants.DeviceIds.kBackRightId);
-  Talon leftFrontMotor = new Talon(Constants.DeviceIds.kFrontLeftId);
-  Talon leftBackMotor = new Talon(Constants.DeviceIds.kBackLeftId);
-
+  WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(Constants.DeviceIds.kFrontRightId);
+  WPI_TalonSRX rightBackMotor = new WPI_TalonSRX(Constants.DeviceIds.kBackRightId);
+  WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(Constants.DeviceIds.kFrontLeftId);
+  WPI_TalonSRX leftBackMotor = new WPI_TalonSRX(Constants.DeviceIds.kBackLeftId);
 
   // Declare Differential Drive
   DifferentialDrive m_drive;
@@ -41,17 +36,13 @@ public class DriveBase extends SubsystemBase {
 
     // Motor Safety
     rightFrontMotor.setSafetyEnabled(false);
-    rightBackMotor.setSafetyEnabled(false);
     leftFrontMotor.setSafetyEnabled(false);
-    leftBackMotor.setSafetyEnabled(false);
 
     // Motor Control
     rightFrontMotor.setInverted(false);
     leftFrontMotor.setInverted(true);
 
     //  Set Back Motors to follow front Motors
-    rightFrontMotor.addFollower(rightBackMotor);
-    leftFrontMotor.addFollower(leftBackMotor);
 
     m_drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 

@@ -4,7 +4,11 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -14,16 +18,15 @@ public class GroundIntake extends SubsystemBase {
 CommandXboxController m_OperatorController = new CommandXboxController(Constants.OperatorConstants.kOperatorControllerPort);
 
 /*  Motor Declaration */
-Talon upperMotor = new Talon(Constants.DeviceIds.kUpperMotorId);
-Talon lowerMotor = new Talon(Constants.DeviceIds.kLowerMotorId);
+WPI_TalonSRX upperMotor = new WPI_TalonSRX(Constants.DeviceIds.kUpperMotorId);
+WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.DeviceIds.kLowerMotorId);
 
   public GroundIntake() {
     
     /*  Motor Configuration */
+    TalonSRXConfiguration config = new TalonSRXConfiguration();
 
-    // Motor Safety
-    upperMotor.setSafetyEnabled(false);
-    lowerMotor.setSafetyEnabled(false);
+    config.peakCurrentLimit = 40;
 
     /*  Motor control */
     //  Set motors Inverted
@@ -37,17 +40,26 @@ Talon lowerMotor = new Talon(Constants.DeviceIds.kLowerMotorId);
   }
   public void bufferNote(){
     //  Set motors buffer the note through constants
-    upperMotor.set(Constants.GroundIntakeConstants.kStopMotor);
-    lowerMotor.set(Constants.GroundIntakeConstants.kIdleConstant);
+    upperMotor.set(TalonSRXControlMode.PercentOutput,
+      Constants.GroundIntakeConstants.kIdleConstant);
+
+    lowerMotor.set(TalonSRXControlMode.PercentOutput,
+    Constants.GroundIntakeConstants.kIntakeNote);
    }
   public void intakeNote(){
     //  Set motors to the intake speed from constants
-    upperMotor.set(Constants.GroundIntakeConstants.kIntakeNote);
-    lowerMotor.set(Constants.GroundIntakeConstants.kIntakeNote);
+    upperMotor.set(TalonSRXControlMode.PercentOutput,
+      Constants.GroundIntakeConstants.kIntakeNote);
+
+    lowerMotor.set(TalonSRXControlMode.PercentOutput,
+    Constants.GroundIntakeConstants.kIntakeNote);
     }
   public void stopIntake(){
     //  Set motors to the zero constant
-    upperMotor.set(Constants.GroundIntakeConstants.kStopMotor);
-    upperMotor.set(Constants.GroundIntakeConstants.kStopMotor);
+    upperMotor.set(TalonSRXControlMode.PercentOutput,
+      Constants.GroundIntakeConstants.kStopMotor);
+
+    lowerMotor.set(TalonSRXControlMode.PercentOutput,
+    Constants.GroundIntakeConstants.kStopMotor);
   }
 }
