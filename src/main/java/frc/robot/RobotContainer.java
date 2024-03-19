@@ -25,9 +25,9 @@ public class RobotContainer {
   private final GroundIntake m_GroundIntake = new GroundIntake();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final CommandXboxController m_DriverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController m_operatorController =
+  private final CommandXboxController m_OperatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,12 +49,12 @@ public class RobotContainer {
     /*  ---Shooter Bindings--- */
 
     //  Trigger intakeNote when the povDown button is pressed
-    m_operatorController.povDown().whileTrue(Commands.startEnd(
+    m_OperatorController.rightTrigger().whileTrue(Commands.startEnd(
       () -> {m_GroundIntake.intakeNote();},
       () -> {m_GroundIntake.stopIntake();}, 
       m_GroundIntake));
 
-    m_operatorController.povUp().whileTrue(Commands.startEnd(
+    m_OperatorController.rightTrigger().whileTrue(Commands.startEnd(
       () -> {m_GroundIntake.bufferNote();},
       () ->{m_GroundIntake.stopIntake();},
         m_GroundIntake));

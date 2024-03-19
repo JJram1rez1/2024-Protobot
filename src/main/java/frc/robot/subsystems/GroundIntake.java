@@ -4,33 +4,30 @@
 
 package frc.robot.subsystems;
 
+
+import org.opencv.features2d.FlannBasedMatcher;
+
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
 public class GroundIntake extends SubsystemBase {
-  /** Creates a new GroundIntake. */
-CommandXboxController m_OperatorController = new CommandXboxController(Constants.OperatorConstants.kOperatorControllerPort);
+    /** Creates a new GroundIntake. */
+  CommandXboxController m_OperatorController = new CommandXboxController(Constants.OperatorConstants.kOperatorControllerPort);
 
-/*  Motor Declaration */
-WPI_TalonSRX upperMotor = new WPI_TalonSRX(Constants.DeviceIds.kUpperMotorId);
-WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.DeviceIds.kLowerMotorId);
+    /*  Motor Declaration */
+  WPI_TalonSRX upperMotor = new WPI_TalonSRX(Constants.DeviceIds.kLeftGroundIntake);
+  WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.DeviceIds.kRightGroundIntake);
 
   public GroundIntake() {
-    
-    /*  Motor Configuration */
-    TalonSRXConfiguration config = new TalonSRXConfiguration();
+      /*  Motor Configuration */
 
-    config.peakCurrentLimit = 40;
-
-    /*  Motor control */
-    //  Set motors Inverted
-    upperMotor.setInverted(true);
+        /*  Motor control */
+      //  Set motors Inverted
+    upperMotor.setInverted(false);
     lowerMotor.setInverted(true);
   }
 
@@ -61,5 +58,21 @@ WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.DeviceIds.kLowerMotorId);
 
     lowerMotor.set(TalonSRXControlMode.PercentOutput,
     Constants.GroundIntakeConstants.kStopMotor);
+  }
+  public void feedNote(){
+
+    upperMotor.set(TalonSRXControlMode.PercentOutput,
+    Constants.GroundIntakeConstants.kFullSend);
+
+    lowerMotor.set(TalonSRXControlMode.PercentOutput,
+    Constants.GroundIntakeConstants.kFullSend);    
+  }
+  public void spitOutNote(){
+
+    upperMotor.set(TalonSRXControlMode.PercentOutput,
+    - Constants.GroundIntakeConstants.kFullSend);
+
+    lowerMotor.set(TalonSRXControlMode.PercentOutput,
+   -  Constants.GroundIntakeConstants.kFullSend);       
   }
 }

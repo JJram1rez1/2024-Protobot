@@ -33,8 +33,8 @@ public final class Constants {
     /*  Ground Intake Susbystem Ids */
     
     // Ground Intake Motor Ids
-    public static final int kLowerMotorId = 50;
-    public static final int kUpperMotorId = 51;
+    public static final int kRightGroundIntake = 50;
+    public static final int kLeftGroundIntake = 51;
   }
 
   public static class GroundIntakeConstants{
@@ -45,6 +45,8 @@ public final class Constants {
     public static final double kIntakeNote = 0.4;
 
     public static final double kIdleConstant = 0.25;
+
+    public static final double kFullSend = 1.0;
     }
   }
 
